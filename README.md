@@ -64,8 +64,10 @@ image to enlarge, Download for the high-res file, or Copy URL for the image link
 
 ## Notes
 
-- **Key resolution:** `/img` uses an environment variable if set, then a project `.env`,
-  then `~/.config/llm-image-picker/config`. The `.env.example` shows the format.
+- **Key resolution:** `/img` uses a `PEXELS_API_KEY` shell environment variable if one is
+  set; otherwise it reads a `.env` in the folder you run `/img` from; otherwise the global
+  `~/.config/llm-image-picker/config`. First match wins, in that order. The `.env.example`
+  shows the format.
 - **Licensing:** this command is MIT (see `LICENSE`). Pexels and Pixabay images are free
   under their own licenses ([Pexels](https://www.pexels.com/license/),
   [Pixabay](https://pixabay.com/service/license-summary/)); the generated page credits each
