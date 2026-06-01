@@ -40,25 +40,22 @@ This doubles as a quick security habit worth learning. Secrets go in a file call
 
 1. Get a free Pexels key: open https://www.pexels.com/api/, sign up (free, no credit
    card), and copy your key.
-2. Make your own secrets file from the template:
-
-   ```bash
-   cp .env.example .env
-   ```
-
-3. Open `.env` in your editor, paste your key after `PEXELS_API_KEY=`, and save:
+2. Open the `.env` file in your project, or create one if you do not have it yet. If you
+   already have a `.env`, do not replace it: just add this line to it.
 
    ```
    PEXELS_API_KEY=your_key_here
    ```
 
-That is it. `/img` reads `.env` automatically.
+That is it. `/img` reads the key from the `.env` in the folder you run it from. (The
+repo's `.env.example` just shows the expected format.)
 
 Why this is a good habit, in plain terms:
 - Your key lives in `.env`, never in your code and never in an AI chat.
-- `.env` is listed in `.gitignore`, so it is never committed or pushed to GitHub.
-- `.env.example` is the shareable template with the values left blank. This is the
-  standard pattern across almost every modern project, so it is worth getting used to.
+- `.env` belongs in `.gitignore`, so it is never committed or pushed to GitHub. Most
+  frameworks ignore it already; if yours does not, add a line `.env` to `.gitignore`.
+- This is the standard pattern across almost every modern project, so it is worth getting
+  used to.
 
 Optional: add a free Pixabay key (https://pixabay.com/api/docs/) on the `PIXABAY_API_KEY`
 line for illustrations and vectors. Leave it blank to stay Pexels-only.
@@ -69,16 +66,18 @@ line for illustrations and vectors. Leave it blank to stay Pexels-only.
 
 ### Using `/img` across many projects?
 
-A `.env` lives in one project folder. If you would rather have your key available
-everywhere, set it globally instead by adding this to your shell profile (`~/.zshrc` for
-zsh, `~/.bashrc` for bash), then open a new terminal:
+A `.env` only applies in the folder you run `/img` from. If you work across many projects,
+or you keep running `/img` from a different folder than your `.env`, set the key globally
+instead by adding this to your shell profile (`~/.zshrc` for zsh, `~/.bashrc` for bash),
+then open a new terminal:
 
 ```bash
 export PEXELS_API_KEY="your_key_here"
 export PIXABAY_API_KEY="your_key_here"   # optional
 ```
 
-`/img` uses a global environment variable if it does not find a `.env`.
+A global environment variable always takes precedence; `/img` only falls back to `.env`
+when one is not set. So you can set it globally once and forget about folders.
 
 ## Usage
 
