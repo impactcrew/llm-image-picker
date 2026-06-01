@@ -11,14 +11,14 @@ images, any orientation, using whichever sources have a key configured.
 ## Step 0: Check the API Keys
 
 Pexels is the baseline source. Pixabay is optional. `/img` is a global command, so its key
-lives in a global config file at `~/.config/llm-image-picker/keys.env`, which works from any folder. A
+lives in a global config file at `~/.config/llm-image-picker/config`, which works from any folder. A
 key is resolved in this order: an environment variable that is already set, then a project
-`.env` in the current folder, then the global `~/.config/llm-image-picker/keys.env`. Only our two keys
+`.env` in the current folder, then the global `~/.config/llm-image-picker/config`. Only our two keys
 are read out of those files (never execute them), so an existing project `.env` with other
 settings is left untouched:
 
 ```bash
-KF="$HOME/.config/llm-image-picker/keys.env"
+KF="$HOME/.config/llm-image-picker/config"
 [ -z "$PEXELS_API_KEY" ] && for f in .env "$KF"; do [ -f "$f" ] && PEXELS_API_KEY=$(sed -n 's/^[[:space:]]*PEXELS_API_KEY=//p' "$f" | tail -1 | tr -d "\"'\r"); [ -n "$PEXELS_API_KEY" ] && break; done
 [ -z "$PIXABAY_API_KEY" ] && for f in .env "$KF"; do [ -f "$f" ] && PIXABAY_API_KEY=$(sed -n 's/^[[:space:]]*PIXABAY_API_KEY=//p' "$f" | tail -1 | tr -d "\"'\r"); [ -n "$PIXABAY_API_KEY" ] && break; done
 export PEXELS_API_KEY PIXABAY_API_KEY
@@ -40,7 +40,7 @@ any folder, and teach the pattern while you do:
 
    ```bash
    mkdir -p ~/.config/llm-image-picker
-   KEYFILE=~/.config/llm-image-picker/keys.env
+   KEYFILE=~/.config/llm-image-picker/config
    [ -s "$KEYFILE" ] || printf '# Paste each key after the = and save. Pexels is required, Pixabay is optional.\n# Pexels key: https://www.pexels.com/api/\nPEXELS_API_KEY=\n# Pixabay key (optional, illustrations + vectors): https://pixabay.com/api/docs/  (Parameters > key, once logged in)\nPIXABAY_API_KEY=\n' > "$KEYFILE"
    grep -qs '^[[:space:]]*PEXELS_API_KEY=' "$KEYFILE" || printf 'PEXELS_API_KEY=\n' >> "$KEYFILE"
    grep -qs '^[[:space:]]*PIXABAY_API_KEY=' "$KEYFILE" || printf 'PIXABAY_API_KEY=\n' >> "$KEYFILE"
@@ -48,7 +48,7 @@ any folder, and teach the pattern while you do:
 
 3. Open the file for them so they can paste straight in. Use `open -t` on macOS (a `.env`
    file has no default app, so plain `open` fails; `-t` forces the default text editor):
-   `open -t ~/.config/llm-image-picker/keys.env`. On Linux use `xdg-open ~/.config/llm-image-picker/keys.env`. Then
+   `open -t ~/.config/llm-image-picker/config`. On Linux use `xdg-open ~/.config/llm-image-picker/config`. Then
    ask them to paste the key after `PEXELS_API_KEY=` and save. They paste it into the file,
    never into this chat.
 4. In a sentence, explain why, so they learn it: secrets belong in a dedicated config file
@@ -69,7 +69,7 @@ them it is now exposed in the session, recommend they rotate it at
 https://www.pexels.com/api/, and point them back to the config file.
 
 The optional Pixabay key goes on a `PIXABAY_API_KEY` line in the same
-`~/.config/llm-image-picker/keys.env`, added the same non-destructive way. To find it: Pixabay has no
+`~/.config/llm-image-picker/config`, added the same non-destructive way. To find it: Pixabay has no
 key button. The user creates a free account, and once logged in their key is shown at
 https://pixabay.com/api/docs/ in the Parameters table on the `key` row, labelled
 `Your API key:`. Pixabay is always optional; never block on it.
@@ -97,7 +97,7 @@ is already set as a global environment variable.
 Pexels:
 
 ```bash
-KF="$HOME/.config/llm-image-picker/keys.env"
+KF="$HOME/.config/llm-image-picker/config"
 [ -z "$PEXELS_API_KEY" ] && for f in .env "$KF"; do [ -f "$f" ] && PEXELS_API_KEY=$(sed -n 's/^[[:space:]]*PEXELS_API_KEY=//p' "$f" | tail -1 | tr -d "\"'\r"); [ -n "$PEXELS_API_KEY" ] && break; done
 curl -s "https://api.pexels.com/v1/search?query=QUERY&per_page=NUM&orientation=ORIENTATION" \
   -H "Authorization: $PEXELS_API_KEY" \
@@ -111,7 +111,7 @@ curl -s "https://api.pexels.com/v1/search?query=QUERY&per_page=NUM&orientation=O
 Pixabay (only if chosen):
 
 ```bash
-KF="$HOME/.config/llm-image-picker/keys.env"
+KF="$HOME/.config/llm-image-picker/config"
 [ -z "$PIXABAY_API_KEY" ] && for f in .env "$KF"; do [ -f "$f" ] && PIXABAY_API_KEY=$(sed -n 's/^[[:space:]]*PIXABAY_API_KEY=//p' "$f" | tail -1 | tr -d "\"'\r"); [ -n "$PIXABAY_API_KEY" ] && break; done
 curl -s "https://pixabay.com/api/?key=$PIXABAY_API_KEY&q=QUERY&per_page=NUM&orientation=ORIENTATION&image_type=all&safesearch=true" \
   > /tmp/pixabay-LABEL.json

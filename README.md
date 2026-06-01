@@ -34,7 +34,7 @@ Pick one:
 1. **Get a free Pexels API key:** go to [pexels.com/api](https://www.pexels.com/api/),
    sign up (free, no credit card), and copy your key.
 2. **Run `/img`.** The first time you run it, it creates a file called
-   `~/.config/llm-image-picker/keys.env`, opens it, and asks you to paste your key on the
+   `~/.config/llm-image-picker/config`, opens it, and asks you to paste your key on the
    `PEXELS_API_KEY` line. Save it, and you're set for every project.
 
 Paste your key into that file, never into the AI chat.
@@ -43,7 +43,7 @@ Optional, for illustrations and vector graphics: create a free Pixabay account. 
 has no "get a key" button. Once you're logged in, your key is shown on the
 [API page](https://pixabay.com/api/docs/) in the **Parameters** table, on the `key` row
 (it reads `Your API key:` followed by the key). Copy that and paste it onto the
-`PIXABAY_API_KEY` line already in `~/.config/llm-image-picker/keys.env` (the same file as
+`PIXABAY_API_KEY` line already in `~/.config/llm-image-picker/config` (the same file as
 your Pexels key).
 
 ## Usage
@@ -65,7 +65,7 @@ image to enlarge, Download for the high-res file, or Copy URL for the image link
 ## Notes
 
 - **Key resolution:** `/img` uses an environment variable if set, then a project `.env`,
-  then `~/.config/llm-image-picker/keys.env`. The `.env.example` shows the format.
+  then `~/.config/llm-image-picker/config`. The `.env.example` shows the format.
 - **Licensing:** this command is MIT (see `LICENSE`). Pexels and Pixabay images are free
   under their own licenses ([Pexels](https://www.pexels.com/license/),
   [Pixabay](https://pixabay.com/service/license-summary/)); the generated page credits each
