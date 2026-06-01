@@ -5,7 +5,8 @@ A single slash command that searches [Pexels](https://www.pexels.com/) (and opti
 page: a grid of results with click-to-enlarge, download buttons, copy-URL buttons, and
 creator credits.
 
-No agents, no plugins, no dependencies. One Markdown file and your own free API key.
+No agents, no plugins, no runtime dependencies. A Markdown command, a small setup script,
+and your own free API key.
 
 It is not tied to any single tool. The instructions are plain text, so it works in any
 agentic LLM CLI that can run shell commands and read/write files: Claude Code, Cursor,
@@ -32,21 +33,30 @@ Other tools (Cursor, Aider, Gemini CLI, Codex, and similar): add `img.md` as a c
 command or prompt using that tool's own mechanism, or just paste its contents into the
 chat.
 
-### Step 2: Run it, paste your key when asked
+### Step 2: Add your free API key
 
 1. Get a free Pexels key: open https://www.pexels.com/api/, sign up (free, no credit
    card), and copy your key.
-2. Run `/img` in your tool. The first time, it sees you have no key, asks you to paste it,
-   and offers to save it for you. That is the whole setup. You never open a config file.
+2. In your own terminal, run the setup script. It asks for your key with hidden input and
+   saves it to your shell profile, then you are done:
 
-Optional: grab a free Pixabay key too (https://pixabay.com/api/docs/) to also search
-illustrations and vectors. Paste it the same way when the command asks, or skip it and
-`/img` stays Pexels-only.
+   ```bash
+   ./setup.sh
+   ```
 
-### Prefer to set the key yourself?
+   Open a new terminal afterward (or run `source ~/.zshrc`). The script also offers an
+   optional free Pixabay key (https://pixabay.com/api/docs/) for illustrations and
+   vectors. Skip it and `/img` stays Pexels-only.
 
-If you would rather not have the assistant do it, add this to your shell profile
-(`~/.zshrc` for zsh, `~/.bashrc` for bash) and open a new terminal:
+> Never paste an API key into an AI chat. Anything you type to the assistant is sent to
+> the model provider and may be stored. The setup script exists so your key is typed into
+> your own terminal with hidden input and stays on your machine. `/img` itself is built to
+> refuse a key pasted into chat and point you here instead.
+
+### Prefer to do it by hand?
+
+Add this to your shell profile (`~/.zshrc` for zsh, `~/.bashrc` for bash) and open a new
+terminal:
 
 ```bash
 export PEXELS_API_KEY="your_key_here"
