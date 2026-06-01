@@ -5,8 +5,8 @@ A single slash command that searches [Pexels](https://www.pexels.com/) (and opti
 page: a grid of results with click-to-enlarge, download buttons, copy-URL buttons, and
 creator credits.
 
-No agents, no plugins, no runtime dependencies. A Markdown command, a small setup script,
-and your own free API key.
+No agents, no plugins, no runtime dependencies. A Markdown command and your own free API
+key, kept in a local `.env` file.
 
 It is not tied to any single tool. The instructions are plain text, so it works in any
 agentic LLM CLI that can run shell commands and read/write files: Claude Code, Cursor,
@@ -35,34 +35,50 @@ chat.
 
 ### Step 2: Add your free API key
 
+This doubles as a quick security habit worth learning. Secrets go in a file called
+`.env` that is kept out of git, so it is never shared or uploaded.
+
 1. Get a free Pexels key: open https://www.pexels.com/api/, sign up (free, no credit
    card), and copy your key.
-2. In your own terminal, run the setup script. It asks for your key with hidden input and
-   saves it to your shell profile, then you are done:
+2. Make your own secrets file from the template:
 
    ```bash
-   ./setup.sh
+   cp .env.example .env
    ```
 
-   Open a new terminal afterward (or run `source ~/.zshrc`). The script also offers an
-   optional free Pixabay key (https://pixabay.com/api/docs/) for illustrations and
-   vectors. Skip it and `/img` stays Pexels-only.
+3. Open `.env` in your editor, paste your key after `PEXELS_API_KEY=`, and save:
 
-> Never paste an API key into an AI chat. Anything you type to the assistant is sent to
-> the model provider and may be stored. The setup script exists so your key is typed into
-> your own terminal with hidden input and stays on your machine. `/img` itself is built to
-> refuse a key pasted into chat and point you here instead.
+   ```
+   PEXELS_API_KEY=your_key_here
+   ```
 
-### Prefer to do it by hand?
+That is it. `/img` reads `.env` automatically.
 
-Add this to your shell profile (`~/.zshrc` for zsh, `~/.bashrc` for bash) and open a new
-terminal:
+Why this is a good habit, in plain terms:
+- Your key lives in `.env`, never in your code and never in an AI chat.
+- `.env` is listed in `.gitignore`, so it is never committed or pushed to GitHub.
+- `.env.example` is the shareable template with the values left blank. This is the
+  standard pattern across almost every modern project, so it is worth getting used to.
+
+Optional: add a free Pixabay key (https://pixabay.com/api/docs/) on the `PIXABAY_API_KEY`
+line for illustrations and vectors. Leave it blank to stay Pexels-only.
+
+> Never paste an API key into an AI chat. Type it into the `.env` file in your editor
+> instead. Anything sent to the assistant goes to the model provider and may be stored.
+> `/img` is built to refuse a key pasted into chat and point you back here.
+
+### Using `/img` across many projects?
+
+A `.env` lives in one project folder. If you would rather have your key available
+everywhere, set it globally instead by adding this to your shell profile (`~/.zshrc` for
+zsh, `~/.bashrc` for bash), then open a new terminal:
 
 ```bash
 export PEXELS_API_KEY="your_key_here"
-# optional second source:
-export PIXABAY_API_KEY="your_key_here"
+export PIXABAY_API_KEY="your_key_here"   # optional
 ```
+
+`/img` uses a global environment variable if it does not find a `.env`.
 
 ## Usage
 
