@@ -1,4 +1,4 @@
-# /img — Royalty-Free Image Search for Agentic LLM CLIs
+# /img: Royalty-Free Image Search for Agentic LLM CLIs
 
 A single slash command that searches [Pexels](https://www.pexels.com/) (and optionally
 [Pixabay](https://pixabay.com/)) for royalty-free images and builds a clickable picker
