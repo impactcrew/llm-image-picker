@@ -39,9 +39,10 @@ Pick one:
 
 Type the key into that file, never into the AI chat.
 
-Optional, for illustrations and vector graphics: get a free Pixabay key at
-[pixabay.com/api](https://pixabay.com/api/docs/) and add a `PIXABAY_API_KEY` line in the
-same file.
+Optional, for illustrations and vector graphics: create a free Pixabay account, then find
+[your Pixabay API key](https://pixabay.com/api/docs/) in the **Parameters** section of that
+page (next to `key`, shown once you're logged in). Add it on a `PIXABAY_API_KEY` line in
+the same file.
 
 ## Usage
 
