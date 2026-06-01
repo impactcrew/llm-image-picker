@@ -30,13 +30,17 @@ Install this /img command for me.
 Your assistant copies `img.md` into your tool's commands folder. Pasting a URL tells your
 assistant to fetch and follow instructions from it, so only do this with repos you trust.
 
-Prefer to do it by hand? Copy the file yourself.
+Prefer to do it by hand? Copy the file yourself, from inside the cloned repo folder.
 
-Claude Code:
+Claude Code, available in every project:
 
 ```bash
-cp img.md ~/.claude/commands/img.md      # available in every project
-# or, for a single project only:
+cp img.md ~/.claude/commands/img.md
+```
+
+Or for a single project only, run from that project's folder:
+
+```bash
 cp img.md .claude/commands/img.md
 ```
 
