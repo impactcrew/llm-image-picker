@@ -14,21 +14,20 @@ Cursor, Aider, Gemini CLI, Codex, and others.
 
 Pick one:
 
-- **In your AI tool:** paste this in. Your assistant fetches the file and installs it.
-  (It follows the URL you give it, so only do this with repos you trust.)
+- **In your AI tool:** paste this in. Your assistant fetches the file and installs it
+  wherever your tool keeps commands. (It follows the URL you give it, so only do this with
+  repos you trust.)
 
   ```
   Install the /img command from https://github.com/impactcrew/llm-image-picker
   ```
 
-- **In a terminal:** run this one line. It works from any folder, no clone needed:
+- **In a terminal:** run this one line. It works from any folder, no clone needed. The
+  path shown is Claude Code's; for another tool, swap in that tool's commands folder.
 
   ```bash
   mkdir -p ~/.claude/commands && curl -fsSL https://raw.githubusercontent.com/impactcrew/llm-image-picker/main/img.md -o ~/.claude/commands/img.md
   ```
-
-That installs it for Claude Code. For other tools, put `img.md` in that tool's commands
-folder.
 
 ### 2. Add a free API key
 
