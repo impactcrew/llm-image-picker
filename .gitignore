@@ -9,3 +9,6 @@
 pexels-*.json
 pixabay-*.json
 pexels-results.html
+
+# macOS cruft
+.DS_Store
