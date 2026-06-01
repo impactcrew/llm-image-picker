@@ -123,7 +123,7 @@ has an `error` field or zero results, tell the user and let them adjust the term
 ## Step 3: Build the Picker Page
 
 Read each `/tmp/pexels-*.json` and `/tmp/pixabay-*.json` file directly and write a single
-self-contained HTML file to `/tmp/pexels-results.html`. Do NOT use jq or shell JSON
+self-contained HTML file to `/tmp/image-results.html`. Do NOT use jq or shell JSON
 parsing. Read the files and generate the markup yourself.
 
 Requirements for the page:
@@ -167,9 +167,9 @@ largeImageURL       modal, Download, and Copy URL (high-res)
 
 Open the file with the platform-appropriate command:
 
-- macOS: `open /tmp/pexels-results.html`
-- Linux: `xdg-open /tmp/pexels-results.html`
-- Windows: `start /tmp/pexels-results.html`
+- macOS: `open /tmp/image-results.html`
+- Linux: `xdg-open /tmp/image-results.html`
+- Windows: `start /tmp/image-results.html`
 
 Then:
 
