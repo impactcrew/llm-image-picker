@@ -1,0 +1,7 @@
+# Local API key files (never commit your Pexels key)
+.env
+*.env
+
+# Generated output / temp
+pexels-*.json
+pexels-results.html
