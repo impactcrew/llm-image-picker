@@ -14,12 +14,23 @@ Aider, Gemini CLI, Codex, and others.
 
 ## Setup
 
-One-time, a couple of minutes. You won't touch your shell config, and you don't need to
-know what an environment variable is.
+One-time, a couple of minutes. Your key goes in a single config file, with no shell config
+to edit.
 
-### Step 1: Add the command to your tool
+### Step 1: Install the command
 
-`img.md` is a plain instruction file. Drop it into your AI coding tool once.
+Easiest, since you're already in an AI coding tool: paste this repo's URL and ask it to
+install the command.
+
+```
+https://github.com/impactcrew/llm-image-picker
+Install this /img command for me.
+```
+
+Your assistant copies `img.md` into your tool's commands folder. Pasting a URL tells your
+assistant to fetch and follow instructions from it, so only do this with repos you trust.
+
+Prefer to do it by hand? Copy the file yourself.
 
 Claude Code:
 
@@ -32,6 +43,14 @@ cp img.md .claude/commands/img.md
 Other tools (Cursor, Aider, Gemini CLI, Codex, and similar): add `img.md` as a custom
 command or prompt using that tool's own mechanism, or just paste its contents into the
 chat.
+
+**For the AI assistant doing the install:**
+1. Fetch `img.md` from this repo (raw:
+   `https://raw.githubusercontent.com/impactcrew/llm-image-picker/main/img.md`).
+2. Write it to `~/.claude/commands/img.md` (Claude Code), or this tool's equivalent
+   commands location.
+3. Confirm the file is in place, then tell the user to run `/img` and follow its first-run
+   key setup. Do not ask the user to paste their API key into the chat.
 
 ### Step 2: Add your free API key
 
