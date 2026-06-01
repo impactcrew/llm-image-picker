@@ -6,7 +6,7 @@ page: a grid of results with click-to-enlarge, download buttons, copy-URL button
 creator credits.
 
 No agents, no plugins, no runtime dependencies. A Markdown command and your own free API
-key, kept in a local `.env` file.
+key, kept in one config file in your home folder.
 
 It is not tied to any single tool. The instructions are plain text, so it works in any
 agentic LLM CLI that can run shell commands and read/write files: Claude Code, Cursor,
@@ -35,49 +35,51 @@ chat.
 
 ### Step 2: Add your free API key
 
-This doubles as a quick security habit worth learning. Secrets go in a file called
-`.env` that is kept out of git, so it is never shared or uploaded.
+`/img` works in every project, so its key lives in one global config file in your home
+folder. Set it once and it works everywhere.
 
 1. Get a free Pexels key: open https://www.pexels.com/api/, sign up (free, no credit
    card), and copy your key.
-2. Open the `.env` file in your project, or create one if you do not have it yet. If you
-   already have a `.env`, do not replace it: just add this line to it.
+2. Create the config file and open it in your editor:
+
+   ```bash
+   mkdir -p ~/.config/img && touch ~/.config/img/keys.env
+   open ~/.config/img/keys.env     # macOS. Linux: xdg-open. Or just open it in your editor.
+   ```
+
+3. Add your key on the `PEXELS_API_KEY` line and save:
 
    ```
    PEXELS_API_KEY=your_key_here
    ```
 
-That is it. `/img` reads the key from the `.env` in the folder you run it from. (The
-repo's `.env.example` just shows the expected format.)
+That is it. `/img` reads this file from any folder.
 
-Why this is a good habit, in plain terms:
-- Your key lives in `.env`, never in your code and never in an AI chat.
-- `.env` belongs in `.gitignore`, so it is never committed or pushed to GitHub. Most
-  frameworks ignore it already; if yours does not, add a line `.env` to `.gitignore`.
-- This is the standard pattern across almost every modern project, so it is worth getting
-  used to.
+Why it is set up this way, in plain terms:
+- Your key lives in a dedicated config file, never in your code and never in an AI chat.
+- The file sits in your home folder, outside any project, so it cannot be committed to a
+  repo by accident.
+- One file, every project. You never repeat this per project.
 
-Optional: add a free Pixabay key (https://pixabay.com/api/docs/) on the `PIXABAY_API_KEY`
-line for illustrations and vectors. Leave it blank to stay Pexels-only.
+Optional: add a free Pixabay key (https://pixabay.com/api/docs/) on a `PIXABAY_API_KEY`
+line for illustrations and vectors. Leave it out to stay Pexels-only.
 
-> Never paste an API key into an AI chat. Type it into the `.env` file in your editor
+> Never paste an API key into an AI chat. Type it into the config file in your editor
 > instead. Anything sent to the assistant goes to the model provider and may be stored.
 > `/img` is built to refuse a key pasted into chat and point you back here.
 
-### Using `/img` across many projects?
+### Other ways to provide the key
 
-A `.env` only applies in the folder you run `/img` from. If you work across many projects,
-or you keep running `/img` from a different folder than your `.env`, set the key globally
-instead by adding this to your shell profile (`~/.zshrc` for zsh, `~/.bashrc` for bash),
-then open a new terminal:
+`/img` checks three places in order and uses the first key it finds:
 
-```bash
-export PEXELS_API_KEY="your_key_here"
-export PIXABAY_API_KEY="your_key_here"   # optional
-```
+1. An environment variable that is already set. Handy for CI or power users:
+   `export PEXELS_API_KEY="..."` in `~/.zshrc` (zsh) or `~/.bashrc` (bash).
+2. A project-local `.env` in the folder you run `/img` from. Add a `PEXELS_API_KEY=` line
+   and keep `.env` in that project's `.gitignore`. Use this for a per-project key.
+3. The global `~/.config/img/keys.env` from Step 2.
 
-A global environment variable always takes precedence; `/img` only falls back to `.env`
-when one is not set. So you can set it globally once and forget about folders.
+The global file is simplest for most people. The `.env.example` in this repo shows the key
+format for whichever file you choose.
 
 ## Usage
 
