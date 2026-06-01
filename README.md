@@ -13,43 +13,14 @@ Aider, Gemini CLI, Codex, and others.
 
 ## Setup
 
-### 1. Get a free Pexels API key
+One-time, about two minutes. You do not need to know what an environment variable is, and
+you will not edit any system files by hand. Your AI assistant handles the technical part.
 
-Sign up at https://www.pexels.com/api/ and create a key. It is free.
+### Step 1: Add the command to your tool
 
-### 2. Add the key to your shell
+`img.md` is a plain instruction file. Drop it into your AI coding tool once.
 
-Add this to `~/.zshrc` (or `~/.bashrc`):
-
-```bash
-export PEXELS_API_KEY="your_key_here"
-```
-
-Then reload your shell:
-
-```bash
-source ~/.zshrc
-```
-
-### 2b. (Optional) Add a Pixabay key
-
-Pixabay adds illustrations and vector graphics, not just photos. It is entirely optional:
-if you skip it, the command stays Pexels-only and never mentions Pixabay. To enable it,
-get a free key at https://pixabay.com/api/docs/ and add:
-
-```bash
-export PIXABAY_API_KEY="your_key_here"
-```
-
-When this key is present, `/img` asks whether to search Pexels, Pixabay, or both.
-
-### 3. Install the command
-
-`img.md` is a plain Markdown instruction file. Any agentic LLM CLI that can run shell
-commands and read/write files can use it. Add it as a custom command or prompt in your
-tool, or just paste its contents into the chat.
-
-Claude Code (exact paths):
+Claude Code:
 
 ```bash
 cp img.md ~/.claude/commands/img.md      # available in every project
@@ -58,9 +29,30 @@ cp img.md .claude/commands/img.md
 ```
 
 Other tools (Cursor, Aider, Gemini CLI, Codex, and similar): add `img.md` as a custom
-command or prompt using that tool's own mechanism, or paste its contents into the chat.
-The procedure inside is tool-neutral: it asks what you need in plain text, calls the
-image APIs with `curl`, and writes a local HTML page.
+command or prompt using that tool's own mechanism, or just paste its contents into the
+chat.
+
+### Step 2: Run it, paste your key when asked
+
+1. Get a free Pexels key: open https://www.pexels.com/api/, sign up (free, no credit
+   card), and copy your key.
+2. Run `/img` in your tool. The first time, it sees you have no key, asks you to paste it,
+   and offers to save it for you. That is the whole setup. You never open a config file.
+
+Optional: grab a free Pixabay key too (https://pixabay.com/api/docs/) to also search
+illustrations and vectors. Paste it the same way when the command asks, or skip it and
+`/img` stays Pexels-only.
+
+### Prefer to set the key yourself?
+
+If you would rather not have the assistant do it, add this to your shell profile
+(`~/.zshrc` for zsh, `~/.bashrc` for bash) and open a new terminal:
+
+```bash
+export PEXELS_API_KEY="your_key_here"
+# optional second source:
+export PIXABAY_API_KEY="your_key_here"
+```
 
 ## Usage
 

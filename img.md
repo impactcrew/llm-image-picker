@@ -17,19 +17,31 @@ test -n "$PEXELS_API_KEY" && echo "pexels: yes" || echo "pexels: NO"
 test -n "$PIXABAY_API_KEY" && echo "pixabay: yes" || echo "pixabay: no"
 ```
 
-If `pexels: NO`, stop and tell the user:
+If `pexels: NO`, do NOT just print an error and stop. Onboard the user yourself, in
+plain language, so they never have to touch a config file by hand:
 
-> No Pexels API key found. Get a free key at https://www.pexels.com/api/ and add it to
-> your shell, for example:
->
->     export PEXELS_API_KEY="your_key_here"
->
-> Then open a new terminal (or `source` your shell profile) and run /img again.
->
-> Optional: add a free Pixabay key too (https://pixabay.com/api/docs/) as
-> `PIXABAY_API_KEY` to also search illustrations and vector graphics.
+1. Tell them: "You need a free Pexels API key. It takes about a minute and no coding.
+   Open https://www.pexels.com/api/, sign up (free, no credit card), copy your key, and
+   paste it here."
+2. When they paste the key, offer to save it so this is a one-time step. With their
+   agreement, append the line below to their shell profile (`~/.zshrc` if their shell is
+   zsh, `~/.bashrc` if bash; check `$SHELL`):
 
-Do not continue until the Pexels key is present.
+   ```bash
+   export PEXELS_API_KEY="THE_KEY_THEY_PASTED"
+   ```
+
+   Then confirm in one sentence what you did and that it will be remembered next time.
+3. Use the key they just pasted for THIS session's API calls right away, so they see
+   results now without restarting anything.
+
+If they would rather not save it to their shell profile, offer to write it to a local
+`.env` file instead (the included `.gitignore` already excludes `.env`), or to use it for
+this one session only. Never echo the full key back to them and never commit it anywhere.
+
+The same applies to Pixabay: if the user asks for illustrations or vectors and no
+`PIXABAY_API_KEY` is set, walk them through https://pixabay.com/api/docs/ the same way.
+Pixabay is always optional; never block on it.
 
 ## Step 1: Gather Requirements
 
