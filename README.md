@@ -37,13 +37,13 @@ Pick one:
    you to paste your key on the `PEXELS_API_KEY` line. Save and you're set, for every
    project.
 
-Type the key into that file, never into the AI chat.
+Type the key into `~/.config/img/keys.env`, never into the AI chat.
 
 Optional, for illustrations and vector graphics: create a free Pixabay account. Pixabay
 has no "get a key" button. Once you're logged in, your key is shown on the
 [API page](https://pixabay.com/api/docs/) in the **Parameters** table, on the `key` row
 (it reads `Your API key:` followed by the key). Copy that and add it on a `PIXABAY_API_KEY`
-line in the same file.
+line in `~/.config/img/keys.env`, the same file as your Pexels key.
 
 ## Usage
 
