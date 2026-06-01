@@ -1,3 +1,5 @@
+![/img - royalty-free image search for AI coding tools](assets/social-card.png)
+
 # /img - Royalty-Free Image Search for AI Coding Tools
 
 A slash command that searches [Pexels](https://www.pexels.com/) (and optionally
