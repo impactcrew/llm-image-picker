@@ -35,8 +35,10 @@ Get a free Pexels key at https://www.pexels.com/api/, then run `/img`. The first
 creates `~/.config/img/keys.env`, opens it, and asks you to paste your key on the
 `PEXELS_API_KEY` line. Save, and you're done. Set once, works in every project.
 
-Type the key into that file, never into the AI chat. Optional: add a `PIXABAY_API_KEY` line
-for illustrations and vector graphics.
+Type the key into that file, never into the AI chat.
+
+Optional: for illustrations and vector graphics too, get a free Pixabay key at
+https://pixabay.com/api/docs/ and add it on a `PIXABAY_API_KEY` line in the same file.
 
 ## Usage
 
