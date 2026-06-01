@@ -54,26 +54,16 @@ chat.
 
 ### Step 2: Add your free API key
 
-`/img` works in every project, so its key lives in one global config file under your home
-folder. Set it once and it works everywhere.
+`/img` keeps your key in one global config file under your home folder
+(`~/.config/img/keys.env`), so you set it once and it works in every project. You don't
+create that file by hand: `/img` makes it for you on first run.
 
 1. Get a free Pexels key: open https://www.pexels.com/api/, sign up (free, no credit
    card), and copy your key.
-2. Create the config file:
+2. Run `/img`. The first time it runs without a key, it creates the config file and opens
+   it for you. Paste your key into that file on the `PEXELS_API_KEY` line and save.
 
-   ```bash
-   mkdir -p ~/.config/img && touch ~/.config/img/keys.env
-   ```
-
-   Then open `~/.config/img/keys.env` in your editor (`open` on macOS, `xdg-open` on
-   Linux), or just open it the way you normally open a file.
-3. Add your key on the `PEXELS_API_KEY` line and save:
-
-   ```
-   PEXELS_API_KEY=your_key_here
-   ```
-
-That's it. `/img` reads this file from any folder.
+That's it. `/img` reads the file from any folder after that.
 
 Why it's set up this way, in plain terms:
 - Your key lives in a dedicated config file, never in your code and never in an AI chat.
