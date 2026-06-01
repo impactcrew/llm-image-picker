@@ -64,10 +64,10 @@ them it is now exposed in the session, recommend they rotate it at
 https://www.pexels.com/api/, and point them back to the config file.
 
 The optional Pixabay key goes on a `PIXABAY_API_KEY` line in the same
-`~/.config/img/keys.env`, added the same non-destructive way. To find it, the user creates
-a free Pixabay account and copies their key from the Parameters section at
-https://pixabay.com/api/docs/ (it is shown there next to `key` once they are logged in).
-Pixabay is always optional; never block on it.
+`~/.config/img/keys.env`, added the same non-destructive way. To find it: Pixabay has no
+key button. The user creates a free account, and once logged in their key is shown at
+https://pixabay.com/api/docs/ in the Parameters table on the `key` row, labelled
+`Your API key:`. Pixabay is always optional; never block on it.
 
 ## Step 1: Gather Requirements
 
