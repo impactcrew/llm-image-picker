@@ -42,8 +42,9 @@ Paste your key into that file, never into the AI chat.
 Optional, for illustrations and vector graphics: create a free Pixabay account. Pixabay
 has no "get a key" button. Once you're logged in, your key is shown on the
 [API page](https://pixabay.com/api/docs/) in the **Parameters** table, on the `key` row
-(it reads `Your API key:` followed by the key). Copy that and add it on a `PIXABAY_API_KEY`
-line in `~/.config/llm-image-picker/keys.env`, the same file as your Pexels key.
+(it reads `Your API key:` followed by the key). Copy that and paste it onto the
+`PIXABAY_API_KEY` line already in `~/.config/llm-image-picker/keys.env` (the same file as
+your Pexels key).
 
 ## Usage
 

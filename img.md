@@ -34,13 +34,16 @@ any folder, and teach the pattern while you do:
 1. Tell them: "You need a free Pexels API key (about a minute, no coding). For your
    security, do not paste it here. Open https://www.pexels.com/api/, sign up (free, no
    credit card), and copy your key."
-2. Make sure the global config file exists and has a `PEXELS_API_KEY=` line, without
-   overwriting anything. This creates `~/.config/llm-image-picker/keys.env` if needed and appends only
-   a blank key name (no secret), and only if it is not already there:
+2. Make sure the global config file exists and has both key lines, without overwriting
+   anything. If the file is new or empty, seed it with a labelled template (both keys, no
+   secrets); if it already has content, just add whichever key line is missing:
 
    ```bash
-   mkdir -p ~/.config/img && touch ~/.config/llm-image-picker/keys.env
-   grep -qs '^[[:space:]]*PEXELS_API_KEY=' ~/.config/llm-image-picker/keys.env || printf 'PEXELS_API_KEY=\n' >> ~/.config/llm-image-picker/keys.env
+   mkdir -p ~/.config/llm-image-picker
+   KEYFILE=~/.config/llm-image-picker/keys.env
+   [ -s "$KEYFILE" ] || printf '# Paste each key after the = and save. Pexels is required, Pixabay is optional.\n# Pexels key: https://www.pexels.com/api/\nPEXELS_API_KEY=\n# Pixabay key (optional, illustrations + vectors): https://pixabay.com/api/docs/  (Parameters > key, once logged in)\nPIXABAY_API_KEY=\n' > "$KEYFILE"
+   grep -qs '^[[:space:]]*PEXELS_API_KEY=' "$KEYFILE" || printf 'PEXELS_API_KEY=\n' >> "$KEYFILE"
+   grep -qs '^[[:space:]]*PIXABAY_API_KEY=' "$KEYFILE" || printf 'PIXABAY_API_KEY=\n' >> "$KEYFILE"
    ```
 
 3. Open the file for them so they can paste straight in. Use `open -t` on macOS (a `.env`
