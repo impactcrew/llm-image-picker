@@ -31,14 +31,17 @@ Pick one:
 
 ### 2. Add a free API key
 
-Get a free Pexels key at https://www.pexels.com/api/, then run `/img`. The first time, it
-creates `~/.config/img/keys.env`, opens it, and asks you to paste your key on the
-`PEXELS_API_KEY` line. Save, and you're done. Set once, works in every project.
+1. **Get a free Pexels API key:** go to [pexels.com/api](https://www.pexels.com/api/),
+   sign up (free, no credit card), and copy your key.
+2. **Run `/img`.** With no key set, it creates `~/.config/img/keys.env`, opens it, and asks
+   you to paste your key on the `PEXELS_API_KEY` line. Save and you're set, for every
+   project.
 
 Type the key into that file, never into the AI chat.
 
-Optional: for illustrations and vector graphics too, get a free Pixabay key at
-https://pixabay.com/api/docs/ and add it on a `PIXABAY_API_KEY` line in the same file.
+Optional, for illustrations and vector graphics: get a free Pixabay key at
+[pixabay.com/api](https://pixabay.com/api/docs/) and add a `PIXABAY_API_KEY` line in the
+same file.
 
 ## Usage
 
