@@ -10,41 +10,46 @@ images, any orientation, using whichever sources have a key configured.
 
 ## Step 0: Check the API Keys
 
-Pexels is the baseline source. Pixabay is optional and only used if its key is present.
+Pexels is the baseline source. Pixabay is optional. Keys come from a local `.env` file in
+the current folder, or from environment variables if one is set globally. Load `.env`
+first (harmless if it does not exist), then check:
 
 ```bash
+set -a; [ -f .env ] && . ./.env; set +a
 test -n "$PEXELS_API_KEY" && echo "pexels: yes" || echo "pexels: NO"
 test -n "$PIXABAY_API_KEY" && echo "pixabay: yes" || echo "pixabay: no"
 ```
 
 If `pexels: NO`, do NOT ask the user to paste their key into this chat. API keys must
 never be entered into an AI session: anything typed to the assistant is sent to the model
-provider and may be logged. Instead, guide them through a secure one-time setup that
-keeps the key on their own machine:
+provider and may be logged. Instead, set them up the standard, secure way with a `.env`
+file, and use the moment to teach the pattern:
 
-1. Tell them, in plain language: "You need a free Pexels API key. It takes about a minute
-   and no coding. For your security, do not paste it here. Open
-   https://www.pexels.com/api/, sign up (free, no credit card), and copy your key."
-2. Point them to the included setup script, which prompts for the key with hidden input
-   in their OWN terminal and saves it to their shell profile. They run it themselves
-   (for example, in Claude Code they can type `! ./setup.sh`):
+1. Tell them: "You need a free Pexels API key (about a minute, no coding). For your
+   security, do not paste it here. Open https://www.pexels.com/api/, sign up (free, no
+   credit card), and copy your key."
+2. Create their secrets file from the template. This step has no secret in it, so you may
+   run it for them:
 
    ```bash
-   ./setup.sh
+   cp .env.example .env
    ```
 
-   If they do not have the script, give them the manual alternative to run in their own
-   terminal, not in this chat: add `export PEXELS_API_KEY="..."` to `~/.zshrc` (zsh) or
-   `~/.bashrc` (bash), then open a new terminal.
-3. Once done, have them run /img again, and re-run the Step 0 check.
+3. Ask them to open `.env` in their editor, paste the key after `PEXELS_API_KEY=`, and
+   save. They type it into the file, never into this chat.
+4. In a sentence or two, explain why this is safe, so they learn it: secrets live in
+   `.env`, `.env` is listed in `.gitignore` so it is never committed or pushed, and
+   `.env.example` is the shareable template with no real keys. This is the standard
+   pattern in almost every modern project.
+5. Have them run /img again, and re-run the check above.
 
 If the user pastes a key into the chat anyway, do not store it or quietly use it. Tell
 them it is now exposed in the session, recommend they rotate it at
-https://www.pexels.com/api/, and point them back to the setup script.
+https://www.pexels.com/api/, and point them back to the `.env` file.
 
-The same applies to the optional Pixabay key (https://pixabay.com/api/docs/): never
-accept it in chat; route through `setup.sh` or a manual export. Pixabay is always
-optional; never block on it.
+The optional Pixabay key (https://pixabay.com/api/docs/) goes on the `PIXABAY_API_KEY`
+line of the same `.env`. Never accept it in chat. Pixabay is always optional; never block
+on it.
 
 ## Step 1: Gather Requirements
 
@@ -63,9 +68,13 @@ do not depend on it.
 
 For EACH search term, query each chosen source.
 
+Every shell block that calls an API must load the key first. This is harmless if the key
+is already set as a global environment variable.
+
 Pexels:
 
 ```bash
+set -a; [ -f .env ] && . ./.env; set +a
 curl -s "https://api.pexels.com/v1/search?query=QUERY&per_page=NUM&orientation=ORIENTATION" \
   -H "Authorization: $PEXELS_API_KEY" \
   > /tmp/pexels-LABEL.json
@@ -78,6 +87,7 @@ curl -s "https://api.pexels.com/v1/search?query=QUERY&per_page=NUM&orientation=O
 Pixabay (only if chosen):
 
 ```bash
+set -a; [ -f .env ] && . ./.env; set +a
 curl -s "https://pixabay.com/api/?key=$PIXABAY_API_KEY&q=QUERY&per_page=NUM&orientation=ORIENTATION&image_type=all&safesearch=true" \
   > /tmp/pixabay-LABEL.json
 ```

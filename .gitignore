@@ -1,7 +1,11 @@
-# Local API key files (never commit your Pexels key)
+# Your real secrets file. Never commit this.
 .env
 *.env
 
-# Generated output / temp
+# ...but keep the safe template, which has no real keys in it.
+!.env.example
+
+# Generated output and temp files
 pexels-*.json
+pixabay-*.json
 pexels-results.html
