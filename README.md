@@ -5,8 +5,8 @@ A slash command that searches [Pexels](https://www.pexels.com/) (and optionally
 page: a grid of results, click to enlarge, download and copy-URL buttons, and creator
 credits.
 
-One Markdown file plus your own free API key. Works in any agentic LLM CLI: Claude Code,
-Cursor, Aider, Gemini CLI, Codex, and others.
+One file plus your own free API key. Works in any AI coding tool: Claude Code, Cursor,
+Aider, Gemini CLI, Codex, and others.
 
 ## Setup
 
@@ -14,9 +14,9 @@ Cursor, Aider, Gemini CLI, Codex, and others.
 
 Pick one:
 
-- **In your AI tool:** paste this in. Your assistant fetches the file and installs it
-  wherever your tool keeps commands. (It follows the URL you give it, so only do this with
-  repos you trust.)
+- **In your AI tool:** paste this into the chat. Your assistant grabs the file and installs
+  it wherever your tool keeps commands. (It follows the link you give it, so only do this
+  with sources you trust.)
 
   ```
   Install the /img command from https://github.com/impactcrew/llm-image-picker
@@ -33,11 +33,11 @@ Pick one:
 
 1. **Get a free Pexels API key:** go to [pexels.com/api](https://www.pexels.com/api/),
    sign up (free, no credit card), and copy your key.
-2. **Run `/img`.** With no key set, it creates `~/.config/img/keys.env`, opens it, and asks
-   you to paste your key on the `PEXELS_API_KEY` line. Save and you're set, for every
-   project.
+2. **Run `/img`.** The first time you run it, it creates a file called
+   `~/.config/img/keys.env`, opens it, and asks you to paste your key on the
+   `PEXELS_API_KEY` line. Save it, and you're set for every project.
 
-Type the key into `~/.config/img/keys.env`, never into the AI chat.
+Paste your key into that file, never into the AI chat.
 
 Optional, for illustrations and vector graphics: create a free Pixabay account. Pixabay
 has no "get a key" button. Once you're logged in, your key is shown on the
@@ -51,8 +51,8 @@ line in `~/.config/img/keys.env`, the same file as your Pexels key.
 /img coffee beans
 ```
 
-Run `/img` with no argument to be prompted for search terms, count, and orientation, or
-comma-separate several searches at once:
+Run `/img` on its own and it asks you what to search for, how many images, and which
+orientation. Search several things at once by separating them with commas:
 
 ```
 /img massage therapy, healthy food, modern office
