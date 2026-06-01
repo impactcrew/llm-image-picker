@@ -14,9 +14,13 @@ Cursor, Aider, Gemini CLI, Codex, and others.
 
 Pick one:
 
-- **In your AI tool:** paste this repo's URL and say "install the /img command for me."
-  Your assistant copies the file into place. (It fetches and follows the URL, so only do
-  this with repos you trust.)
+- **In your AI tool:** paste this in. Your assistant fetches the file and installs it.
+  (It follows the URL you give it, so only do this with repos you trust.)
+
+  ```
+  Install the /img command from https://github.com/impactcrew/llm-image-picker
+  ```
+
 - **In a terminal:** run this one line. It works from any folder, no clone needed:
 
   ```bash
