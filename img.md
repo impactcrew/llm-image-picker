@@ -17,31 +17,34 @@ test -n "$PEXELS_API_KEY" && echo "pexels: yes" || echo "pexels: NO"
 test -n "$PIXABAY_API_KEY" && echo "pixabay: yes" || echo "pixabay: no"
 ```
 
-If `pexels: NO`, do NOT just print an error and stop. Onboard the user yourself, in
-plain language, so they never have to touch a config file by hand:
+If `pexels: NO`, do NOT ask the user to paste their key into this chat. API keys must
+never be entered into an AI session: anything typed to the assistant is sent to the model
+provider and may be logged. Instead, guide them through a secure one-time setup that
+keeps the key on their own machine:
 
-1. Tell them: "You need a free Pexels API key. It takes about a minute and no coding.
-   Open https://www.pexels.com/api/, sign up (free, no credit card), copy your key, and
-   paste it here."
-2. When they paste the key, offer to save it so this is a one-time step. With their
-   agreement, append the line below to their shell profile (`~/.zshrc` if their shell is
-   zsh, `~/.bashrc` if bash; check `$SHELL`):
+1. Tell them, in plain language: "You need a free Pexels API key. It takes about a minute
+   and no coding. For your security, do not paste it here. Open
+   https://www.pexels.com/api/, sign up (free, no credit card), and copy your key."
+2. Point them to the included setup script, which prompts for the key with hidden input
+   in their OWN terminal and saves it to their shell profile. They run it themselves
+   (for example, in Claude Code they can type `! ./setup.sh`):
 
    ```bash
-   export PEXELS_API_KEY="THE_KEY_THEY_PASTED"
+   ./setup.sh
    ```
 
-   Then confirm in one sentence what you did and that it will be remembered next time.
-3. Use the key they just pasted for THIS session's API calls right away, so they see
-   results now without restarting anything.
+   If they do not have the script, give them the manual alternative to run in their own
+   terminal, not in this chat: add `export PEXELS_API_KEY="..."` to `~/.zshrc` (zsh) or
+   `~/.bashrc` (bash), then open a new terminal.
+3. Once done, have them run /img again, and re-run the Step 0 check.
 
-If they would rather not save it to their shell profile, offer to write it to a local
-`.env` file instead (the included `.gitignore` already excludes `.env`), or to use it for
-this one session only. Never echo the full key back to them and never commit it anywhere.
+If the user pastes a key into the chat anyway, do not store it or quietly use it. Tell
+them it is now exposed in the session, recommend they rotate it at
+https://www.pexels.com/api/, and point them back to the setup script.
 
-The same applies to Pixabay: if the user asks for illustrations or vectors and no
-`PIXABAY_API_KEY` is set, walk them through https://pixabay.com/api/docs/ the same way.
-Pixabay is always optional; never block on it.
+The same applies to the optional Pixabay key (https://pixabay.com/api/docs/): never
+accept it in chat; route through `setup.sh` or a manual export. Pixabay is always
+optional; never block on it.
 
 ## Step 1: Gather Requirements
 
