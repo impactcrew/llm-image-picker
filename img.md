@@ -43,8 +43,9 @@ any folder, and teach the pattern while you do:
    grep -qs '^[[:space:]]*PEXELS_API_KEY=' ~/.config/img/keys.env || printf 'PEXELS_API_KEY=\n' >> ~/.config/img/keys.env
    ```
 
-3. Ask them to open `~/.config/img/keys.env` in their editor, type the key after
-   `PEXELS_API_KEY=`, and save. They type it into the file, never into this chat.
+3. Open the file for them so they can paste straight in (`open ~/.config/img/keys.env` on
+   macOS, `xdg-open ~/.config/img/keys.env` on Linux), then ask them to type the key after
+   `PEXELS_API_KEY=` and save. They type it into the file, never into this chat.
 4. In a sentence, explain why, so they learn it: secrets belong in a dedicated config file
    in your home folder, not in your code and not in an AI chat. Because this file lives
    outside any project, it cannot be committed to a repo by accident, and the same key now
