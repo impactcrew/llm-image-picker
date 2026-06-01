@@ -1,4 +1,4 @@
-# /img: Royalty-Free Image Search for AI Coding Tools
+# /img - Royalty-Free Image Search for AI Coding Tools
 
 A slash command that searches [Pexels](https://www.pexels.com/) (and optionally
 [Pixabay](https://pixabay.com/)) for royalty-free images and builds a clickable picker
