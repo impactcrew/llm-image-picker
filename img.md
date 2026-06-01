@@ -10,15 +10,17 @@ images, any orientation, using whichever sources have a key configured.
 
 ## Step 0: Check the API Keys
 
-Pexels is the baseline source. Pixabay is optional. A key can come from two places: an
-environment variable that is already set, or a `.env` file in the folder where the user
-runs `/img`. Read only our two keys out of `.env` rather than executing the file, so an
-existing project `.env` with other settings is never run or disturbed. Prefer any value
-already in the environment:
+Pexels is the baseline source. Pixabay is optional. `/img` is a global command, so its key
+lives in a global config file at `~/.config/img/keys.env`, which works from any folder. A
+key is resolved in this order: an environment variable that is already set, then a project
+`.env` in the current folder, then the global `~/.config/img/keys.env`. Only our two keys
+are read out of those files (never execute them), so an existing project `.env` with other
+settings is left untouched:
 
 ```bash
-[ -f .env ] && : "${PEXELS_API_KEY:=$(sed -n 's/^[[:space:]]*PEXELS_API_KEY=//p' .env | tail -1 | tr -d "\"'\r")}"
-[ -f .env ] && : "${PIXABAY_API_KEY:=$(sed -n 's/^[[:space:]]*PIXABAY_API_KEY=//p' .env | tail -1 | tr -d "\"'\r")}"
+KF="$HOME/.config/img/keys.env"
+[ -z "$PEXELS_API_KEY" ] && for f in .env "$KF"; do [ -f "$f" ] && PEXELS_API_KEY=$(sed -n 's/^[[:space:]]*PEXELS_API_KEY=//p' "$f" | tail -1 | tr -d "\"'\r"); [ -n "$PEXELS_API_KEY" ] && break; done
+[ -z "$PIXABAY_API_KEY" ] && for f in .env "$KF"; do [ -f "$f" ] && PIXABAY_API_KEY=$(sed -n 's/^[[:space:]]*PIXABAY_API_KEY=//p' "$f" | tail -1 | tr -d "\"'\r"); [ -n "$PIXABAY_API_KEY" ] && break; done
 export PEXELS_API_KEY PIXABAY_API_KEY
 test -n "$PEXELS_API_KEY" && echo "pexels: yes" || echo "pexels: NO"
 test -n "$PIXABAY_API_KEY" && echo "pixabay: yes" || echo "pixabay: no"
@@ -26,45 +28,43 @@ test -n "$PIXABAY_API_KEY" && echo "pixabay: yes" || echo "pixabay: no"
 
 If `pexels: NO`, do NOT ask the user to paste their key into this chat. API keys must
 never be entered into an AI session: anything typed to the assistant is sent to the model
-provider and may be logged. Set the key up the standard, NON-DESTRUCTIVE way, and teach
-the pattern while you do. The user may already have a `.env` full of other secrets, so
-never overwrite it; only ever add a line.
+provider and may be logged. Set the key up in the global config file so `/img` works from
+any folder, and teach the pattern while you do:
 
 1. Tell them: "You need a free Pexels API key (about a minute, no coding). For your
    security, do not paste it here. Open https://www.pexels.com/api/, sign up (free, no
    credit card), and copy your key."
-2. Make sure a `PEXELS_API_KEY=` line exists in `.env`, without overwriting an existing
-   file. This appends only a blank key name (no secret), and only if it is not already
-   there. It creates `.env` if absent:
+2. Make sure the global config file exists and has a `PEXELS_API_KEY=` line, without
+   overwriting anything. This creates `~/.config/img/keys.env` if needed and appends only
+   a blank key name (no secret), and only if it is not already there:
 
    ```bash
-   grep -qs '^[[:space:]]*PEXELS_API_KEY=' .env || printf 'PEXELS_API_KEY=\n' >> .env
+   mkdir -p ~/.config/img && touch ~/.config/img/keys.env
+   grep -qs '^[[:space:]]*PEXELS_API_KEY=' ~/.config/img/keys.env || printf 'PEXELS_API_KEY=\n' >> ~/.config/img/keys.env
    ```
 
-3. If the project uses git, make sure `.env` is ignored so the key is never committed:
+3. Ask them to open `~/.config/img/keys.env` in their editor, type the key after
+   `PEXELS_API_KEY=`, and save. They type it into the file, never into this chat.
+4. In a sentence, explain why, so they learn it: secrets belong in a dedicated config file
+   in your home folder, not in your code and not in an AI chat. Because this file lives
+   outside any project, it cannot be committed to a repo by accident, and the same key now
+   works in every project.
+5. Have them run /img again, and re-run the check above.
 
-   ```bash
-   { [ -f .gitignore ] && grep -qx '.env' .gitignore; } || echo '.env' >> .gitignore
-   ```
-
-4. Ask them to open `.env` in their editor, type the key after `PEXELS_API_KEY=`, and
-   save. They type it into the file, never into this chat.
-5. In a sentence, explain why, so they learn it: `.env` is the standard place every modern
-   project keeps secrets, and it is gitignored so it never gets committed or pushed.
-6. Have them run /img again, and re-run the check above.
-
-If the user is not in a project folder, or wants `/img` to work everywhere regardless of
-where they run it, offer the alternative: set a global environment variable in their shell
-profile (`~/.zshrc` for zsh, `~/.bashrc` for bash) with `export PEXELS_API_KEY="..."`,
-then open a new terminal. They edit that file themselves; never take the key in chat.
+Alternatives, if the user prefers one (all keep the key out of chat):
+- A project-local `.env`: add a `PEXELS_API_KEY=` line to it (create it if absent, never
+  overwrite), and make sure `.env` is in that project's `.gitignore`. This only applies in
+  that one folder.
+- A global shell environment variable: `export PEXELS_API_KEY="..."` in `~/.zshrc` (zsh)
+  or `~/.bashrc` (bash), edited by the user, then open a new terminal.
 
 If the user pastes a key into the chat anyway, do not store it or quietly use it. Tell
 them it is now exposed in the session, recommend they rotate it at
-https://www.pexels.com/api/, and point them back to the `.env` file.
+https://www.pexels.com/api/, and point them back to the config file.
 
 The optional Pixabay key (https://pixabay.com/api/docs/) goes on a `PIXABAY_API_KEY` line
-in the same `.env`, added the same non-destructive way. Pixabay is always optional; never
-block on it.
+in the same `~/.config/img/keys.env`, added the same non-destructive way. Pixabay is always
+optional; never block on it.
 
 ## Step 1: Gather Requirements
 
@@ -89,7 +89,8 @@ is already set as a global environment variable.
 Pexels:
 
 ```bash
-[ -f .env ] && : "${PEXELS_API_KEY:=$(sed -n 's/^[[:space:]]*PEXELS_API_KEY=//p' .env | tail -1 | tr -d "\"'\r")}"
+KF="$HOME/.config/img/keys.env"
+[ -z "$PEXELS_API_KEY" ] && for f in .env "$KF"; do [ -f "$f" ] && PEXELS_API_KEY=$(sed -n 's/^[[:space:]]*PEXELS_API_KEY=//p' "$f" | tail -1 | tr -d "\"'\r"); [ -n "$PEXELS_API_KEY" ] && break; done
 curl -s "https://api.pexels.com/v1/search?query=QUERY&per_page=NUM&orientation=ORIENTATION" \
   -H "Authorization: $PEXELS_API_KEY" \
   > /tmp/pexels-LABEL.json
@@ -102,7 +103,8 @@ curl -s "https://api.pexels.com/v1/search?query=QUERY&per_page=NUM&orientation=O
 Pixabay (only if chosen):
 
 ```bash
-[ -f .env ] && : "${PIXABAY_API_KEY:=$(sed -n 's/^[[:space:]]*PIXABAY_API_KEY=//p' .env | tail -1 | tr -d "\"'\r")}"
+KF="$HOME/.config/img/keys.env"
+[ -z "$PIXABAY_API_KEY" ] && for f in .env "$KF"; do [ -f "$f" ] && PIXABAY_API_KEY=$(sed -n 's/^[[:space:]]*PIXABAY_API_KEY=//p' "$f" | tail -1 | tr -d "\"'\r"); [ -n "$PIXABAY_API_KEY" ] && break; done
 curl -s "https://pixabay.com/api/?key=$PIXABAY_API_KEY&q=QUERY&per_page=NUM&orientation=ORIENTATION&image_type=all&safesearch=true" \
   > /tmp/pixabay-LABEL.json
 ```
