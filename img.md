@@ -135,8 +135,9 @@ Requirements for the page:
 3. Click a card to open the full image in a centered modal/lightbox. Click the backdrop
    or press Escape to close.
 4. Each card shows a photographer/creator credit linking to their profile, plus a
-   "View on [source]" link to the image's page. Crediting the creator and linking back
-   is required by both Pexels and Pixabay API guidelines.
+   "View on [source]" link to the image's page. Open these links in a new tab
+   (`target="_blank" rel="noopener"`) so the user keeps their gallery. Crediting the
+   creator and linking back is required by both Pexels and Pixabay API guidelines.
 5. Each card has two buttons: "Download" (links to the high-res URL with a `download`
    attribute) and "Copy URL" (copies the full image URL via `navigator.clipboard`).
 6. No emojis anywhere. Plain, clean styling with system fonts. No external CSS or JS
